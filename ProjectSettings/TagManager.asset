@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - SamplesInfoPanel
+  - QDSUITooltip
+  - QDSUIToggleButton
+  - QDSUITextSecondaryColor
+  - QDSUIIcon
+  - QDSUIBackplateGradient
+  - QDSUIToggleBorderlessButton
+  - QDSUISection
+  - QDSUISecondaryButton
+  - QDSUIAccentColor
+  - QDSUIToggleSwitch
+  - QDSUISharedThemeColor
+  - QDSUIBorderlessButton
+  - Ground
+  - QDSUITextSecondaryInvertedColor
+  - QDSUITextInvertedColor
+  - Wickets
+  - Bat
+  - QDSUIDestructiveButton
+  - QDSUIPrimaryButton
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Bat
+  - XR
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
