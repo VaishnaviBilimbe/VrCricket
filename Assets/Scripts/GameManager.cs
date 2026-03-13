@@ -2,7 +2,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using System.Collections.Generic;
+using System;
 
+[Serializable]
+public class SixUI
+{
+    public GameObject sixUI;
+    public GameObject dotUI;
+}
 public class GameManager : MonoBehaviour
 {
     [Header("Game References")]
@@ -44,6 +52,8 @@ public class GameManager : MonoBehaviour
     // Match state tracking
     private int currentOver = 0;
     private int ballsInOver = 0;
+    public SixUI[] ballUI; // size = 6
+    private int currentBallIndex = 0;
 
     private void Start()
     {
@@ -169,16 +179,20 @@ public class GameManager : MonoBehaviour
         {
             ShowUI(fourUI);
             animationsController?.four();
+            ballUI[currentBallIndex].dotUI.SetActive(true);
         }
         else if (runs == 6)
         {
             ShowUI(sixUI);
             animationsController?.six();
+            ballUI[currentBallIndex].sixUI.SetActive(true);
         }
         else
         {
             Debug.Log("Ball missed, no runs awarded");
+            ballUI[currentBallIndex].dotUI.SetActive(true);
         }
+        
         CompletePlay();
     }
 
