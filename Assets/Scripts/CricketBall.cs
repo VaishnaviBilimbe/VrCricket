@@ -36,7 +36,7 @@ public class CricketBall : MonoBehaviour
             }
 
             // Second bounce → check if bat missed
-            if (groundBounceCount == 3)
+            if (groundBounceCount == 4)
             {
                 if (!hasBeenHitByBat)
                 {
@@ -52,16 +52,23 @@ public class CricketBall : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Wickets") && (groundBounceCount==0))
+        if (collision.gameObject.CompareTag("Wickets") )
         {
-            hasHitWicket = true;
-
-            ScoringSystem scoringSystem = FindObjectOfType<ScoringSystem>();
-
-            if (scoringSystem != null && !hasBeenScored)
+            if((groundBounceCount == 0))
             {
-                hasBeenScored = true;
-                scoringSystem.RegisterWicketHit(this);
+                hasHitWicket = true;
+
+                ScoringSystem scoringSystem = FindObjectOfType<ScoringSystem>();
+
+                if (scoringSystem != null && !hasBeenScored)
+                {
+                    hasBeenScored = true;
+                    scoringSystem.RegisterWicketHit(this);
+                }
+            }
+            else
+            {
+                ScoringSystem.instance.OnBoundaryHit.Invoke(0);
             }
         }
     }

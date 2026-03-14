@@ -62,8 +62,8 @@ public class CricketBallThrower : MonoBehaviour
         {
             float _throwForce=Random.Range(.25f,0.40f);
             // Apply consistent force and spin
-            ballRb.AddForce(throwDirection * _throwForce, ForceMode.Impulse);
-            ballRb.AddTorque(Vector3.right * spinIntensity * _throwForce, ForceMode.Impulse);
+            ballRb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+            ballRb.AddTorque(Vector3.left * spinIntensity * throwForce, ForceMode.Impulse);
         }
     }
     

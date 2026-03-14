@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Ball missed, no runs awarded");
             ballUI[currentBallIndex].dotUI.SetActive(true);
         }
-        
+        currentBallIndex++;
         CompletePlay();
     }
 
