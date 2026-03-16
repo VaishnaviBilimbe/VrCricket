@@ -40,7 +40,7 @@ public class CricketBallThrower : MonoBehaviour
         
         // Calculate throw direction (forward with upward angle)
         Vector3 throwDirection = spawnPoint.forward;
-        float _upwardAngle = Random.Range(1f, 3f);
+        float _upwardAngle = Random.Range(1f, 2f);
         throwDirection = Quaternion.AngleAxis(_upwardAngle, -spawnPoint.right) * throwDirection;  // to change the spawn point to right pr left randomize
         
         // Add randomness if enabled
@@ -60,10 +60,10 @@ public class CricketBallThrower : MonoBehaviour
         }
         else
         {
-            float _throwForce=Random.Range(.25f,0.40f);
+            float _throwForce=Random.Range(.20f,0.35f);
             // Apply consistent force and spin
-            ballRb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-            ballRb.AddTorque(Vector3.left * spinIntensity * throwForce, ForceMode.Impulse);
+            ballRb.AddForce(throwDirection * _throwForce, ForceMode.Impulse);
+            ballRb.AddTorque(Vector3.right * spinIntensity * 10F, ForceMode.Impulse);
         }
     }
     

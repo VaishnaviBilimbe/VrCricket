@@ -24,6 +24,7 @@ TagManager:
   - Bat
   - QDSUIDestructiveButton
   - QDSUIPrimaryButton
+  - Ball
   layers:
   - Default
   - TransparentFX

@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateMatchDisplay();
+        FielderManager.instance.ResetFielderPositions();
         yield return new WaitForSeconds(initialDelay);
 
         if (bowlerAnimator != null)
