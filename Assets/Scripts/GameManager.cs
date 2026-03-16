@@ -13,6 +13,7 @@ public class SixUI
 }
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     [Header("Game References")]
     [SerializeField] private Animator bowlerAnimator;
     [SerializeField] private ScoringSystem scoringSystem;
@@ -55,6 +56,10 @@ public class GameManager : MonoBehaviour
     public SixUI[] ballUI; // size = 6
     private int currentBallIndex = 0;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         HideAllUI();

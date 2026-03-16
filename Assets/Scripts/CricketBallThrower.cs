@@ -23,6 +23,8 @@ public class CricketBallThrower : MonoBehaviour
     [SerializeField] private AudioClip _throwSound;
 
     public UnityEvent<int> OnBoundaryHit;
+
+    public float actualForce;
     public void ThrowBall()
     {
         // Create ball at spawn position
@@ -40,18 +42,18 @@ public class CricketBallThrower : MonoBehaviour
         
         // Calculate throw direction (forward with upward angle)
         Vector3 throwDirection = spawnPoint.forward;
-        float _upwardAngle = Random.Range(1f, 2f);
+        float _upwardAngle = Random.Range(1f, 1.5f);
         throwDirection = Quaternion.AngleAxis(_upwardAngle, -spawnPoint.right) * throwDirection;  // to change the spawn point to right pr left randomize
         
         // Add randomness if enabled
         if (addRandomness)
         {
             // Randomize force
-            float actualForce = /*throwForce +*/ Random.Range(0.15F, .25F);
-            
+            //actualForce = /*throwForce +*/ 0.25f;
+
             // Randomize direction slightly
-            float randomYaw = Random.Range(-2,2);
-            float randomPitch = Random.Range(-2, 2); // To change teh randdom value manually for direct variation
+            float randomYaw = Random.Range(-directionVariation, directionVariation);
+            float randomPitch = Random.Range(5, 0); // To change teh randdom value manually for direct variation
             throwDirection = Quaternion.Euler(randomPitch, randomYaw, 0) * throwDirection;
             
             // Apply force and spin
@@ -60,10 +62,10 @@ public class CricketBallThrower : MonoBehaviour
         }
         else
         {
-            float _throwForce=Random.Range(.20f,0.35f);
+            float _throwForce=Random.Range(.20f,0.30f);
             // Apply consistent force and spin
             ballRb.AddForce(throwDirection * _throwForce, ForceMode.Impulse);
-            ballRb.AddTorque(Vector3.right * spinIntensity * 10F, ForceMode.Impulse);
+            ballRb.AddTorque(Vector3.right * spinIntensity * _throwForce, ForceMode.Impulse);
         }
     }
     

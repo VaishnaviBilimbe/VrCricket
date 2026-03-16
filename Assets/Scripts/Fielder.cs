@@ -11,7 +11,8 @@ public class Fielder : MonoBehaviour
     private Transform targetBall;
     private bool isChasing = false;
     private static readonly int IsRunning = Animator.StringToHash("isChasing");
-    private Transform defaultTransform;
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
 
     public Transform target;
     private void Start()
@@ -27,7 +28,8 @@ public class Fielder : MonoBehaviour
                 target = player.transform;
             }
         }
-        defaultTransform = transform;
+        initialPosition = transform.localPosition;
+        initialRotation = transform.localRotation;
     }
 
     public void StartChasing(Transform ball)
@@ -63,9 +65,14 @@ public class Fielder : MonoBehaviour
         if (animator != null)
             animator.SetBool(IsRunning, false);
     }
-    public void ResetPosotion()
+    public void ResetPosition()
     {
-        transform.localPosition=defaultTransform.localPosition;
+        transform.localPosition = initialPosition;
+        transform.localRotation = initialRotation;
+        isChasing = false;
+        targetBall = null;
+        if (animator != null)
+            animator.SetBool(IsRunning, false);
         Debug.Log("reset position");
     }
     private void Update()
@@ -90,6 +97,10 @@ public class Fielder : MonoBehaviour
         {
             Debug.Log("Fielder touched the ball!");
             StopChasing();
+            if (GameManager.instance != null)
+            {
+              //  GameManager.instance.HandleBallFielded();
+            }
         }
     }
 }

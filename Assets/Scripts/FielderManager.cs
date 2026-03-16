@@ -37,9 +37,13 @@ public class FielderManager : MonoBehaviour
         if (currentBall != null)
         {
             CricketBall ballScript = currentBall.GetComponent<CricketBall>();
-            if (ballScript != null && ballScript.HasBeenHitByBat() && !ballScript.HasBeenScored())
+            if (ballScript != null && !ballScript.HasBeenScored())
             {
-                AssignNearestFielder();
+                bool shouldChase = ballScript.HasBeenHitByBat() || ballScript.timeSinceSpawned > 3f;
+                if (shouldChase)
+                {
+                    AssignNearestFielder();
+                }
             }
         }
         else
@@ -81,7 +85,7 @@ public class FielderManager : MonoBehaviour
     {
         foreach(Fielder fielder in fielders)
         {
-            fielder.ResetPosotion();
+            fielder.ResetPosition();
         }
     }
 }

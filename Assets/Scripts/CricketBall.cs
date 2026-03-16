@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +10,16 @@ public class CricketBall : MonoBehaviour
     public bool hasBeenHitByBat = false;
     public bool crossedBoundary = false;
     [SerializeField] private float _lifeTime = 10f;
+    public float timeSinceSpawned = 0f;
 
     private bool firstGroundContact = false;
 
     public int groundBounceCount = 0;
-
+    ScoringSystem scoringSystem;
+    private void Start()
+    {
+        scoringSystem = FindObjectOfType<ScoringSystem>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bat"))
@@ -26,25 +31,25 @@ public class CricketBall : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-            groundBounceCount++;
 
+            groundBounceCount++;
             // First bounce = pitch → ignore
-            if (groundBounceCount == 1)
+          /*  if (groundBounceCount == 1)
             {
                 Debug.Log("Pitch bounce");
                 return;
             }
 
             // Second bounce → check if bat missed
-            if (groundBounceCount == 4)
+            if (groundBounceCount >= 3)
             {
                 if (!hasBeenHitByBat)
                 {
                     Debug.Log("Bat missed - next ball");
                     StartCoroutine(ExecuteNextBall());
                 }
-            }
-
+            }*/
+            
             // Boundary logic bounce tracking
             if (!crossedBoundary)
             {
@@ -58,7 +63,7 @@ public class CricketBall : MonoBehaviour
             {
                 hasHitWicket = true;
 
-                ScoringSystem scoringSystem = FindObjectOfType<ScoringSystem>();
+                
 
                 if (scoringSystem != null && !hasBeenScored)
                 {
@@ -69,6 +74,14 @@ public class CricketBall : MonoBehaviour
             else
             {
                 ScoringSystem.instance.OnBoundaryHit.Invoke(0);
+            }
+        }
+        if (collision.gameObject.CompareTag("Stemp"))
+        {
+            if (scoringSystem != null && !hasBeenScored)
+            {
+                hasBeenScored = true;
+                scoringSystem.RegisterWicketHit(this);
             }
         }
     }
@@ -108,6 +121,7 @@ public class CricketBall : MonoBehaviour
 
     private void Update()
     {
+        timeSinceSpawned += Time.deltaTime;
         _lifeTime -= Time.deltaTime;
         if (_lifeTime <= 0 && !hasBeenScored)
         {
