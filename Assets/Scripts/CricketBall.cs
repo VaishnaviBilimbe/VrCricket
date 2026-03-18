@@ -63,12 +63,11 @@ public class CricketBall : MonoBehaviour
             {
                 hasHitWicket = true;
 
-                
-
                 if (scoringSystem != null && !hasBeenScored)
                 {
                     hasBeenScored = true;
                     scoringSystem.RegisterWicketHit(this);
+                    ScoringSystem.instance.OnBoundaryHit.Invoke(0);
                 }
             }
             else
