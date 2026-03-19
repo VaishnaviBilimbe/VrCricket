@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI targetText;
     [SerializeField] private TextMeshProUGUI gameResultText;
 
+    [Header("Particle")]
+    [SerializeField] private GameObject confetti_1;
+    [SerializeField] private GameObject confetti_2;
+
     [Header("Game Settings")]
     [SerializeField] private float initialDelay = 2f;
     [SerializeField] private float playResultDisplayTime = 2f;
@@ -63,6 +67,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         HideAllUI();
+        HideParticle();
         StoreWicketTransforms();
         UpdateMatchDisplay();
 
@@ -122,6 +127,7 @@ public class GameManager : MonoBehaviour
         }
         
         ShowUI(gameOverUI);
+        PlayParticle();
         OnGameOver?.Invoke(isWin);
         Debug.Log("Cricket game ended! Win: " + isWin);
     }
@@ -184,12 +190,14 @@ public class GameManager : MonoBehaviour
         if (runs == 4)
         {
             ShowUI(fourUI);
+            PlayParticle();
             animationsController?.four();
             ballUI[currentBallIndex].dotUI.SetActive(true);
         }
         else if (runs == 6)
         {
             ShowUI(sixUI);
+            PlayParticle();
             animationsController?.six();
             ballUI[currentBallIndex].sixUI.SetActive(true);
         }
@@ -254,6 +262,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(playResultDisplayTime);
 
         HideAllUI();
+        HideParticle();
         Debug.Log("UI hidden, about to start next bowl");
         StartCoroutine(StartNextBowl());
         Debug.Log("StartNextBowl coroutine started");
@@ -283,13 +292,22 @@ public class GameManager : MonoBehaviour
 
     private void ShowUI(GameObject uiElement)
     {
-       // HideAllUI();
+        HideAllUI();
         if (uiElement != null)
         {
             uiElement.SetActive(true);
         }
     }
-
+    private void PlayParticle()
+    {
+        confetti_1.SetActive(true);
+        confetti_2.SetActive(true);
+    }
+    private void HideParticle()
+    {
+        confetti_1.SetActive(false);
+        confetti_2.SetActive(false);
+    }
     private void HideAllUI()
     {
         if (fourUI != null) fourUI.SetActive(false);

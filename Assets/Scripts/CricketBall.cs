@@ -31,7 +31,7 @@ public class CricketBall : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Ground"))
         {
-
+            Debug.Log("Ground");
             groundBounceCount++;
             // First bounce = pitch → ignore
           /*  if (groundBounceCount == 1)
@@ -62,12 +62,12 @@ public class CricketBall : MonoBehaviour
             if((groundBounceCount == 0))
             {
                 hasHitWicket = true;
-
+                Debug.Log("OUT");
                 if (scoringSystem != null && !hasBeenScored)
                 {
                     hasBeenScored = true;
-                    scoringSystem.RegisterWicketHit(this);
                     ScoringSystem.instance.OnBoundaryHit.Invoke(0);
+                    scoringSystem.RegisterWicketHit(this);
                 }
             }
             else
@@ -80,7 +80,9 @@ public class CricketBall : MonoBehaviour
             if (scoringSystem != null && !hasBeenScored)
             {
                 hasBeenScored = true;
+                Debug.Log("STEMP");
                 scoringSystem.RegisterWicketHit(this);
+                ScoringSystem.instance.OnBoundaryHit.Invoke(0);
             }
         }
     }
