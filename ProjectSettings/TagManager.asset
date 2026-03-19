@@ -25,6 +25,7 @@ TagManager:
   - QDSUIDestructiveButton
   - QDSUIPrimaryButton
   - Ball
+  - Stemp
   layers:
   - Default
   - TransparentFX
