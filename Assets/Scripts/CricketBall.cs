@@ -19,8 +19,6 @@ public class CricketBall : MonoBehaviour
     private void Start()
     {
         scoringSystem = FindObjectOfType<ScoringSystem>();
-        float massRandom = Random.value < 0.5f ? 0.01f : 0.02f;
-        GetComponent<Rigidbody>().mass = massRandom;
     }
     private void OnCollisionEnter(Collision collision)
     {

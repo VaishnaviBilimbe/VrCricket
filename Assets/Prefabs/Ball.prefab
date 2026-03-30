@@ -283,8 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasBeenHitByBat: 0
   crossedBoundary: 0
-  _lifeTime: 15
-  timeSinceSpawned: 0
+  _lifeTime: 10
   groundBounceCount: 0
 --- !u!96 &4436491979417176255
 TrailRenderer:

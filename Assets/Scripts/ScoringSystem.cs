@@ -74,7 +74,7 @@ public class ScoringSystem : MonoBehaviour
             if (ball.HasBeenHitByBat())
             {
                 // Check if boundary was crossed with bat hit
-                if (ball.groundBounceCount!=0)
+                if (ball.HasBouncedOnGround())
                 {
                     // Four runs - ball bounced and crossed boundary
                     AddRuns(4);
