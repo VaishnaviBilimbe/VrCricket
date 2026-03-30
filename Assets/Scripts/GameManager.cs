@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject fourUI;
     [SerializeField] private GameObject sixUI;
     [SerializeField] private GameObject outUI;
+    [SerializeField] private GameObject fourUI_Center;
+    [SerializeField] private GameObject sixUI_Center;
+    [SerializeField] private GameObject outUI_Center;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private TextMeshProUGUI runsWicketsText;
     [SerializeField] private TextMeshProUGUI oversText;
@@ -59,6 +62,8 @@ public class GameManager : MonoBehaviour
     private int ballsInOver = 0;
     public SixUI[] ballUI; // size = 6
     private int currentBallIndex = 0;
+
+    bool isResultUIShown = false;
 
     private void Awake()
     {
@@ -187,33 +192,49 @@ public class GameManager : MonoBehaviour
     private void HandleBoundaryHit(int runs)
     {
         Debug.Log("player runs: " + runs);
+
+        isResultUIShown = false; // reset
+
         if (runs == 4)
         {
             ShowUI(fourUI);
+            ShowCenterUI(fourUI_Center);
             PlayParticle();
             animationsController?.four();
+
             ballUI[currentBallIndex].dotUI.SetActive(true);
+
+            isResultUIShown = true;
         }
         else if (runs == 6)
         {
             ShowUI(sixUI);
+            ShowCenterUI(sixUI_Center);
             PlayParticle();
             animationsController?.six();
+
             ballUI[currentBallIndex].sixUI.SetActive(true);
+
+            isResultUIShown = true;
         }
         else
         {
             Debug.Log("Ball missed, no runs awarded");
             ballUI[currentBallIndex].dotUI.SetActive(true);
         }
+
         currentBallIndex++;
         CompletePlay();
     }
 
     private void HandleWicketHit()
     {
+        isResultUIShown = true;
+
         ShowUI(outUI);
+        ShowCenterUI(outUI_Center);
         animationsController?.wicket();
+
         CompletePlay();
     }
 
@@ -259,13 +280,16 @@ public class GameManager : MonoBehaviour
     private IEnumerator PrepareForNextBowl()
     {
         Debug.Log("Preparing for next bowl");
-        yield return new WaitForSeconds(playResultDisplayTime);
+
+        float delay = isResultUIShown ? playResultDisplayTime : 2f;
+
+        yield return new WaitForSeconds(delay);
 
         HideAllUI();
         HideParticle();
+
         Debug.Log("UI hidden, about to start next bowl");
         StartCoroutine(StartNextBowl());
-        Debug.Log("StartNextBowl coroutine started");
     }
     
     private void UpdateMatchDisplay()
@@ -289,7 +313,13 @@ public class GameManager : MonoBehaviour
             targetText.text = $"{runsNeeded}";
         }
     }
-
+    private void ShowCenterUI(GameObject uiElement)
+    {
+        if (uiElement != null)
+        {
+            uiElement.SetActive(true);
+        }
+    }
     private void ShowUI(GameObject uiElement)
     {
         HideAllUI();
@@ -313,6 +343,10 @@ public class GameManager : MonoBehaviour
         if (fourUI != null) fourUI.SetActive(false);
         if (sixUI != null) sixUI.SetActive(false);
         if (outUI != null) outUI.SetActive(false);
+
+        if (fourUI_Center != null) fourUI_Center.SetActive(false);
+        if (sixUI_Center != null) sixUI_Center.SetActive(false);
+        if (outUI_Center != null) outUI_Center.SetActive(false);
     }
 
     private void StoreWicketTransforms()

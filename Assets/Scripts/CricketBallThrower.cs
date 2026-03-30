@@ -53,6 +53,7 @@ public class CricketBallThrower : MonoBehaviour
         // Apply variations if enabled
         if (addRandomness)
         {
+            actualForce = Random.Range(0.30f, 0.50f);
             // Calculate a variation based on the spawnPoint's rotation so forward/back is relative to the thrower
             float zOffset = Random.Range(-pitchForwardBackVariation, pitchForwardBackVariation);
             float xOffset = Random.Range(0, pitchLeftRightVariation);
